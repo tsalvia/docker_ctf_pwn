@@ -1,0 +1,11 @@
+version: '2'
+
+services:
+  ctf_binary:
+    build:
+      context: .
+    image: ctf_binary
+    container_name: ctf_binary
+    tty: true
+    stdin_open: true
+    privileged: true
