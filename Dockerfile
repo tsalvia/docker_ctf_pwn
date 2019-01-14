@@ -43,7 +43,7 @@ RUN cd /usr/local/bin && \
 # Install peda
 RUN cd /usr/local/bin && \
         git clone https://github.com/longld/peda.git && \
-        echo "source /root/bin/peda/peda.py" > /root/.gdbinit
+        echo "source /usr/local/bin/peda/peda.py" > /root/.gdbinit
 
 # Install ht
 RUN cd /usr/local/bin && \
