@@ -1,7 +1,7 @@
 version: '2'
 
 services:
-  ctf_binary:
+  ctf_pwn:
     build:
       context: .
     image: ctf_pwn
