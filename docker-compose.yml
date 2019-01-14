@@ -4,8 +4,8 @@ services:
   ctf_binary:
     build:
       context: .
-    image: ctf_binary
-    container_name: ctf_binary
+    image: ctf_pwn
+    container_name: ctf_pwn
     tty: true
     stdin_open: true
     privileged: true
