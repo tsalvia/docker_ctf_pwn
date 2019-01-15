@@ -18,6 +18,12 @@ $ docker-compose build ctf_pwn
    $ docker-compose run ctf_pwn
    root@c200263ac40c:~# 
    ```
+   
+   or
+   
+   ```bash:
+   $ docker --privileged -it run ctf_pwn
+   ```
 
 1. Open another terminal. Copy file to want analysing in Docker Image.
 
