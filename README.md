@@ -1,13 +1,13 @@
 # docker_ctf_pwn
 
-## Getting Started
-
-### Quick start
+## Quick start
 
 ```bash:
 $ docker pull tsalvia/ctf_pwn
 $ docker run --privileged -it tsalvia/ctf_pwn
 ```
+
+## Getting Started
 
 ### Installing
 
