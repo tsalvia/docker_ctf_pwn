@@ -2,6 +2,13 @@
 
 ## Getting Started
 
+### Quick start
+
+```bash:
+$ docker pull tsalvia/ctf_pwn
+$ docker run --privileged -it tsalvia/ctf_pwn
+```
+
 ### Installing
 
 Build Docker Image
