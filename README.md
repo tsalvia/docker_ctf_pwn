@@ -1,6 +1,6 @@
 # docker_ctf_pwn
 
-## Quick start
+## Quick Start
 
 ```bash:
 $ docker pull tsalvia/ctf_pwn
