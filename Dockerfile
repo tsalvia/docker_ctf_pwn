@@ -18,6 +18,9 @@ RUN apt-get update && \
         netcat          \
         unzip           \
         curl            \
+        valgrind        \
+        python          \
+        python3         \
         wget
 
 # Setting up Vim
