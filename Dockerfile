@@ -21,6 +21,7 @@ RUN apt-get update && \
         valgrind        \
         python          \
         python3         \
+        lib32z1         \
         wget
 
 # Setting up Vim
