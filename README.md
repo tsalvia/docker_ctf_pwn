@@ -2,9 +2,20 @@
 
 ## Quick Start
 
+1. Pull and Run docker image.
+
 ```bash:
 $ docker pull tsalvia/ctf_pwn
 $ docker run --privileged -it tsalvia/ctf_pwn
+```
+
+2. Copy file.
+
+```bash:
+$ docker ps
+CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+e9adc252eaac        tsalvia/ctf_pwn     "/bin/bash"         31 seconds ago      Up 6 seconds                            dazzling_austin
+$ docker cp <file> e9adc252eaac:/root
 ```
 
 ## Getting Started
