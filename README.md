@@ -25,6 +25,8 @@ $ docker cp <file> e9adc252eaac:/root
 Build Docker Image
 
 ```bash:
+$ git clone https://github.com/tsalvia/docker_ctf_pwn.git
+$ cd docker_ctf_pwn
 $ docker-compose build ctf_pwn
 ```
 
