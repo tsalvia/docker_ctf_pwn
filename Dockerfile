@@ -66,11 +66,12 @@ RUN cd /usr/local/bin && \
         rm ../ht-2.1.0.tar.bz2 
 
 # Enable CoreDump and Disabled ASLR
-RUN echo "ulimit -c unlimited" >> /root/.bashrc && \
-        echo "echo 0 > /proc/sys/kernel/randomize_va_space" >> /root/.bashrc
-
 # Default Shell => /bin/bash
-RUN chsh -s /bin/bash root
+# ls color
+RUN echo "ulimit -c unlimited" > /root/.bashrc && \
+        echo "echo 0 > /proc/sys/kernel/randomize_va_space" >> /root/.bashrc && \
+        echo "export LS_OPTIONS='--color=auto'" >> /root/.bashrc && \
+        echo "export SHELL=/bin/bash" >> /root/.bashrc
 
 WORKDIR /root
 CMD ["/bin/bash"]
