@@ -22,6 +22,8 @@ RUN apt-get update && \
         python          \
         python3         \
         lib32z1         \
+        libc6-dev-i386  \
+        screen          \
         wget
 
 # Setting up Vim
