@@ -35,6 +35,10 @@ RUN cd /root && \
         ln -s .vim/.vimrc .vimrc && \
         /bin/bash -c 'vim -c ":silent! call dein#install() | :q"'
 
+# Setting up GNU Screen
+RUN cd /root && \
+        wget https://raw.githubusercontent.com/tsalvia/screenrc/master/.screenrc
+
 # Install checksec.sh
 RUN cd /usr/local/bin && \
         wget http://www.trapkit.de/tools/checksec.sh && \
