@@ -69,5 +69,8 @@ RUN cd /usr/local/bin && \
 RUN echo "ulimit -c unlimited" >> /root/.bashrc && \
         echo "echo 0 > /proc/sys/kernel/randomize_va_space" >> /root/.bashrc
 
+# Default Shell => /bin/bash
+RUN chsh -s /bin/bash root
+
 WORKDIR /root
 CMD ["/bin/bash"]
