@@ -1,11 +1,12 @@
-FROM debian
+FROM ubuntu:14.04
 
 RUN apt-get update && \
+        apt-get upgrade -y && \
         apt-get install -y \
+        software-properties-common \
         gcc             \
         gdb             \
         git             \
-        vim             \
         binutils        \
         strace          \
         ltrace          \
@@ -24,10 +25,15 @@ RUN apt-get update && \
         lib32z1         \
         libc6-dev-i386  \
         screen          \
+        unzip           \
+        bzip2           \
         wget
 
 # Setting up Vim
-RUN cd /root && \
+RUN add-apt-repository ppa:jonathonf/vim -y && \
+        apt-get update && \
+        apt-get install vim -y && \
+        cd /root && \
         git clone https://github.com/tsalvia/.vim && \
         mkdir -p .vim/bundle && \
         curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > .vim/bundle/installer.sh && \
