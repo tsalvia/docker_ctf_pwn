@@ -77,6 +77,8 @@ RUN cd /usr/local/bin && \
 RUN echo "ulimit -c unlimited" > /root/.bashrc && \
         echo "echo 0 > /proc/sys/kernel/randomize_va_space" >> /root/.bashrc && \
         echo "export LS_OPTIONS='--color=auto'" >> /root/.bashrc && \
+        export LS_COLORS=':' >> /root/.bashrc && \
+        alias ls='ls --color' >> /root/.bashrc && \
         echo "export SHELL=/bin/bash" >> /root/.bashrc
 
 WORKDIR /root
