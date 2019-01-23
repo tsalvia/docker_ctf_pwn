@@ -69,7 +69,13 @@ RUN cd /usr/local/bin && \
         ./configure && \
         make && \
         make install && \
-        rm ../ht-2.1.0.tar.bz2 
+        rm ../ht-2.1.0.tar.bz2
+
+# Install radare2
+RUN cd /usr/local/bin && \
+        git clone https://github.com/radare/radare2.git && \
+        cd radare2/sys/ && \ 
+        ./install.sh
 
 # Enable CoreDump and Disabled ASLR
 # Default Shell => /bin/bash
