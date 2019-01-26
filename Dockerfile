@@ -29,6 +29,10 @@ RUN apt-get update && \
         bzip2           \
         python-pip      \
         python3-pip     \
+        python-dev      \
+        libffi-dev      \
+        pandoc          \
+        libssl-dev      \
         wget
 
 # Setting up Vim
@@ -78,6 +82,10 @@ RUN cd /usr/local/bin && \
         git clone https://github.com/radare/radare2.git && \
         cd radare2/sys/ && \ 
         ./install.sh
+
+# Install pwntools
+RUN pip install virtualenv --upgrade && \
+        pip install pwntools
 
 # Enable CoreDump and Disabled ASLR
 # Default Shell => /bin/bash
