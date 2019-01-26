@@ -27,6 +27,8 @@ RUN apt-get update && \
         screen          \
         unzip           \
         bzip2           \
+        python-pip      \
+        python3-pip     \
         wget
 
 # Setting up Vim
