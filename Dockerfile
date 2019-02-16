@@ -87,14 +87,17 @@ RUN cd /usr/local/bin && \
 RUN pip install virtualenv --upgrade && \
         pip install pwntools
 
+# Install angr
+RUN pip install angr
+
 # Enable CoreDump and Disabled ASLR
 # Default Shell => /bin/bash
 # ls color
 RUN echo "ulimit -c unlimited" > /root/.bashrc && \
         echo "echo 0 > /proc/sys/kernel/randomize_va_space" >> /root/.bashrc && \
         echo "export LS_OPTIONS='--color=auto'" >> /root/.bashrc && \
-        export LS_COLORS=':' >> /root/.bashrc && \
-        alias ls='ls --color' >> /root/.bashrc && \
+        echo "export LS_COLORS=':'" >> /root/.bashrc && \
+        echo "alias ls='ls --color'" >> /root/.bashrc && \
         echo "export SHELL=/bin/bash" >> /root/.bashrc
 
 WORKDIR /root
