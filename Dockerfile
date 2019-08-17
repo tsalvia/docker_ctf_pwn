@@ -22,18 +22,18 @@ RUN apt-get update && \
         valgrind        \
         python          \
         python3         \
+        python3-pip     \
         lib32z1         \
         libc6-dev-i386  \
         screen          \
         unzip           \
         bzip2           \
-        python-pip      \
-        python3-pip     \
         python-dev      \
         libffi-dev      \
         pandoc          \
         libssl-dev      \
-        wget
+        wget            \
+        libreadline-dev
 
 # Setting up Vim
 RUN add-apt-repository ppa:jonathonf/vim -y && \
@@ -83,22 +83,37 @@ RUN cd /usr/local/bin && \
         cd radare2/sys/ && \ 
         ./install.sh
 
+# Install pip2
+RUN wget https://bootstrap.pypa.io/get-pip.py -P /tmp && \
+        python2 /tmp/get-pip.py
+
 # Install pwntools
-RUN pip install virtualenv --upgrade && \
-        pip install pwntools
+RUN pip install pwntools
 
 # Install angr
 RUN pip install angr
 
+# Install ruby
+RUN git clone https://github.com/sstephenson/rbenv.git /root/.rbenv && \
+        git clone https://github.com/sstephenson/ruby-build.git /root/.rbenv/plugins/ruby-build && \
+        /root/.rbenv/bin/rbenv install 2.6.3 && \
+        /root/.rbenv/bin/rbenv global 2.6.3
+
+# Install david942j/one_gadget
+RUN /root/.rbenv/versions/2.6.3/bin/gem install one_gadget
+
 # Enable CoreDump and Disabled ASLR
 # Default Shell => /bin/bash
 # ls color
+# ruby
 RUN echo "ulimit -c unlimited" > /root/.bashrc && \
         echo "echo 0 > /proc/sys/kernel/randomize_va_space" >> /root/.bashrc && \
         echo "export LS_OPTIONS='--color=auto'" >> /root/.bashrc && \
         echo "export LS_COLORS=':'" >> /root/.bashrc && \
         echo "alias ls='ls --color'" >> /root/.bashrc && \
-        echo "export SHELL=/bin/bash" >> /root/.bashrc
+        echo "export SHELL=/bin/bash" >> /root/.bashrc && \
+        echo 'export PATH="/root/.rbenv/bin:$PATH"' >> /root/.bashrc && \
+        echo 'eval "$(rbenv init -)"' >> /root/.bashrc
 
 WORKDIR /root
 CMD ["/bin/bash"]
