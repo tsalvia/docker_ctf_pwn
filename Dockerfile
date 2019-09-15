@@ -1,119 +1,98 @@
 FROM ubuntu:14.04
+MAINTAINER tsalvia <tsaliva.ctf@gmail.com>
 
 RUN apt-get update && \
-        apt-get upgrade -y && \
-        apt-get install -y \
+    apt-get upgrade -y && \
+    apt-get install -y  \
         software-properties-common \
-        gcc             \
-        gdb             \
-        git             \
-        binutils        \
-        strace          \
-        ltrace          \
-        bsdmainutils    \
-        make            \
-        liblzo2-dev     \
-        libncurses5-dev \
-        g++             \
-        socat           \
-        netcat          \
-        unzip           \
+        vim             \
         curl            \
-        valgrind        \
-        python          \
-        python3         \
-        python3-pip     \
-        lib32z1         \
-        libc6-dev-i386  \
-        screen          \
+        wget            \
+        netcat          \
+        socat           \
         unzip           \
         bzip2           \
-        python-dev      \
+        strace          \
+        ltrace          \
+        binutils        \
+        bsdmainutils    \
+        valgrind        \
+        git             \
+        make            \
+        gcc             \
+        g++             \
+        bison           \
+        flex            \
+        pkg-config      \
+        liblzo2-dev     \
+        lib32z1         \
+        libc6-dev-i386  \
         libffi-dev      \
-        pandoc          \
         libssl-dev      \
-        wget            \
-        libreadline-dev
+        libreadline-dev \
+        zlib1g-dev      \
+        libncurses5-dev
 
-# Setting up Vim
-RUN add-apt-repository ppa:jonathonf/vim -y && \
-        apt-get update && \
-        apt-get install vim -y && \
-        cd /root && \
-        git clone https://github.com/tsalvia/.vim && \
-        mkdir -p .vim/bundle && \
-        curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > .vim/bundle/installer.sh && \
-        sh .vim/bundle/installer.sh .vim/bundle && \
-        ln -s .vim/.vimrc .vimrc && \
-        /bin/bash -c 'vim -c ":silent! call dein#install() | :q"'
+# gcc-9, g++-9
+RUN add-apt-repository ppa:ubuntu-toolchain-r/test -y && \
+    apt-get update && \
+    apt-get upgrade -y && \
+    apt-get install -y gcc-9-multilib g++-9-multilib && \
+    update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 30 && \
+    update-alternatives --install /usr/bin/cc cc /usr/bin/gcc-9 30 && \
+    update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-9 30 && \
+    update-alternatives --install /usr/bin/c++ c++ /usr/bin/g++-9 30
 
-# Setting up GNU Screen
-RUN cd /root && \
-        wget https://raw.githubusercontent.com/tsalvia/screenrc/master/.screenrc
+# CMake
+RUN wget -O - https://github.com/Kitware/CMake/releases/download/v3.15.3/cmake-3.15.3.tar.gz | tar xvzf - -C /opt && \
+    cd /opt/cmake-3.15.3 && \
+    ./configure && \
+    make && \
+    make install
 
-# Install checksec.sh
-RUN cd /usr/local/bin && \
-        wget http://www.trapkit.de/tools/checksec.sh && \
-        sed -i 's/\r//g' checksec.sh && \
-        chmod +x /usr/local/bin/checksec.sh
+# gdb, gdb-peda
+RUN apt-get install -y gdb && \
+    git clone https://github.com/longld/peda.git /opt/peda && \
+    echo "source /opt/peda/peda.py" > /root/.gdbinit
 
-# Install rodata2od
-RUN cd /usr/local/bin && \
-        wget https://raw.githubusercontent.com/akiym/akitools/master/rodata2od && \
-        chmod +x /usr/local/bin/*
+# Python3.5, pip, pwntools, angr
+RUN apt-get install -y python3.5 python3.5-dev && \
+    update-alternatives --install /usr/bin/python python /usr/bin/python3.5 30 && \
+    update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.5 30 && \
+    curl -kL https://bootstrap.pypa.io/get-pip.py | python && \
+    pip3 install --upgrade git+https://github.com/arthaud/python3-pwntools.git && \
+    pip3 install --upgrade angr
 
-# Install peda
-RUN cd /usr/local/bin && \
-        git clone https://github.com/longld/peda.git && \
-        echo "source /usr/local/bin/peda/peda.py" > /root/.gdbinit
-
-# Install ht
-RUN cd /usr/local/bin && \
-        wget http://sourceforge.net/projects/hte/files/ht-source/ht-2.1.0.tar.bz2 && \
-        tar xvf ht-2.1.0.tar.bz2 && \
-        cd ht-2.1.0 && \
-        ./configure && \
-        make && \
-        make install && \
-        rm ../ht-2.1.0.tar.bz2
-
-# Install radare2
-RUN cd /usr/local/bin && \
-        git clone https://github.com/radare/radare2.git && \
-        cd radare2/sys/ && \ 
-        ./install.sh
-
-# Install pip2
-RUN wget https://bootstrap.pypa.io/get-pip.py -P /tmp && \
-        python2 /tmp/get-pip.py
-
-# Install pwntools
-RUN pip install pwntools
-
-# Install angr
-RUN pip install angr
-
-# Install ruby
+# Ruby2.6.3, one_gadget
 RUN git clone https://github.com/sstephenson/rbenv.git /root/.rbenv && \
-        git clone https://github.com/sstephenson/ruby-build.git /root/.rbenv/plugins/ruby-build && \
-        /root/.rbenv/bin/rbenv install 2.6.3 && \
-        /root/.rbenv/bin/rbenv global 2.6.3
+    git clone https://github.com/sstephenson/ruby-build.git /root/.rbenv/plugins/ruby-build && \
+    /root/.rbenv/bin/rbenv install 2.6.3 && \
+    /root/.rbenv/bin/rbenv global 2.6.3 && \
+    echo 'export PATH="/root/.rbenv/bin:$PATH"' >> /root/.bashrc && \
+    echo 'eval "$(rbenv init -)"' >> /root/.bashrc && \
+    /root/.rbenv/versions/2.6.3/bin/gem install one_gadget
 
-# Install david942j/one_gadget
-RUN /root/.rbenv/versions/2.6.3/bin/gem install one_gadget
+# radare2
+RUN git clone https://github.com/radare/radare2.git /opt/radare2 && \
+    /opt/radare2/sys/install.sh && \
+    r2pm init && \
+    r2pm -i r2ghidra-dec
 
-# Enable CoreDump and Disabled ASLR
-# Default Shell => /bin/bash
-# ls color
-# ruby
-RUN echo "ulimit -c unlimited" > /root/.bashrc && \
-        echo "echo 0 > /proc/sys/kernel/randomize_va_space" >> /root/.bashrc && \
-        echo "export LS_OPTIONS='--color=auto'" >> /root/.bashrc && \
-        echo "export LS_COLORS=':'" >> /root/.bashrc && \
-        echo "alias ls='ls --color'" >> /root/.bashrc && \
-        echo "export SHELL=/bin/bash" >> /root/.bashrc && \
-        echo 'export PATH="/root/.rbenv/bin:$PATH"' >> /root/.bashrc && \
-        echo 'eval "$(rbenv init -)"' >> /root/.bashrc
+# akitools
+RUN git clone https://github.com/akiym/akitools /opt/akitools && \
+    echo 'export PATH="/opt/akitools:$PATH"' >> /root/.bashrc
+
+# HT Editor
+RUN apt-get install -y g++ && \
+    wget -O - http://sourceforge.net/projects/hte/files/ht-source/ht-2.1.0.tar.bz2 | tar xvfj - -C /opt && \
+    cd /opt/ht-2.1.0/ && \
+    ./configure CXX=g++-4.8 && \
+    make && \
+    make install
+
+# Enable coredump, Disabled ASLR
+RUN echo "ulimit -c unlimited" >> /root/.bashrc && \
+    echo "echo 0 > /proc/sys/kernel/randomize_va_space" >> /root/.bashrc
 
 WORKDIR /root
 CMD ["/bin/bash"]
