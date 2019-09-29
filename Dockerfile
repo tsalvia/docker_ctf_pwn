@@ -17,6 +17,7 @@ RUN apt-get update && \
         binutils        \
         bsdmainutils    \
         valgrind        \
+        qemu-user-static\
         git             \
         make            \
         gcc             \
