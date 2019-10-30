@@ -95,5 +95,6 @@ RUN apt-get install -y g++ && \
 RUN echo "ulimit -c unlimited" >> /root/.bashrc && \
     echo "echo 0 > /proc/sys/kernel/randomize_va_space" >> /root/.bashrc
 
-WORKDIR /root
+RUN mkdir /root/workdir
+WORKDIR /root/workdir
 CMD ["/bin/bash"]
