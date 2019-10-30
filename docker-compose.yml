@@ -9,3 +9,5 @@ services:
     tty: true
     stdin_open: true
     privileged: true
+    volumes:
+    - "/local/folder:/mnt"
