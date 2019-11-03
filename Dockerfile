@@ -8,7 +8,6 @@ RUN apt-get update && \
         vim             \
         curl            \
         wget            \
-        xsel            \
         netcat          \
         socat           \
         unzip           \
