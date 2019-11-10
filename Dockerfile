@@ -91,6 +91,10 @@ RUN apt-get install -y g++ && \
     make && \
     make install
 
+# libc-database
+RUN git clone https://github.com/niklasb/libc-database.git /opt/libc-database && \
+    /opt/libc-database/get
+
 # Enable coredump, Disabled ASLR
 RUN echo "ulimit -c unlimited" >> /root/.bashrc && \
     echo "echo 0 > /proc/sys/kernel/randomize_va_space" >> /root/.bashrc
