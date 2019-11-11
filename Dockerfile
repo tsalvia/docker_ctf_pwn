@@ -93,7 +93,7 @@ RUN apt-get install -y g++ && \
 
 # libc-database
 RUN git clone https://github.com/niklasb/libc-database.git /opt/libc-database && \
-    /opt/libc-database/get
+    /opt/libc-database/get || ret=$? || true && test $ret -eq 1
 
 # Enable coredump, Disabled ASLR
 RUN echo "ulimit -c unlimited" >> /root/.bashrc && \
