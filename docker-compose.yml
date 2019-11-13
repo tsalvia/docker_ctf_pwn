@@ -1,13 +1,11 @@
-version: '2'
-
+version: '3'
 services:
-  ctf_pwn:
-    build:
-      context: .
-    image: ctf_pwn
-    container_name: ctf_pwn
+  ctf:
+    build: .
+    image: tsalvia/ctf_pwn
     tty: true
     stdin_open: true
     privileged: true
     volumes:
-    - "/local/folder:/mnt"
+    - "${SHARE_DIR_PATH}:/mnt"
+    - "${LIBC_DB_PATH}:/opt/libc-database/db"
