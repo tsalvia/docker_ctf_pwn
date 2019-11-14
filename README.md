@@ -18,13 +18,20 @@ root@e9adc252eaac:~/workdir#
 
 ## Getting Started
 
-### Build Image
+### Build or Get Docker Image
 
-```bash
-$ git clone https://github.com/tsalvia/docker_ctf_pwn.git
-$ cd docker_ctf_pwn
-$ docker-compose build
-```
+- Build docker image
+
+    ```bash
+    $ docker-compose build
+    ```
+or
+
+- Get docker image
+
+    ```bash
+    $ docker pull tsalvia/ctf_pwn
+    ```
 
 ### Running the tests
 
