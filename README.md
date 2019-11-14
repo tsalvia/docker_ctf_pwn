@@ -7,7 +7,12 @@ https://github.com/tsalvia/docker_ctf_pwn
 
 ```bash
 $ docker pull tsalvia/ctf_pwn
-$ docker run --privileged -it -v /local/folder/:/mnt -v /local/libc_db/:/opt/libc-database/db tsalvia/ctf_pwn
+$ docker run \
+    --privileged \
+    -it \
+    -v /local/folder/:/mnt \
+    -v /local/libc_db/:/opt/libc-database/db \
+    tsalvia/ctf_pwn
 root@e9adc252eaac:~/workdir#
 ```
 
