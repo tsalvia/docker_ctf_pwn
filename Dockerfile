@@ -100,6 +100,5 @@ RUN git clone https://github.com/niklasb/libc-database.git /opt/libc-database
 RUN echo "ulimit -c unlimited" >> /root/.bashrc && \
     echo "echo 0 > /proc/sys/kernel/randomize_va_space" >> /root/.bashrc
 
-RUN mkdir /root/workdir
 WORKDIR /root/workdir
 CMD ["/bin/bash"]
