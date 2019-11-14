@@ -90,7 +90,8 @@ RUN apt-get install -y g++ && \
     cd /opt/ht-2.1.0/ && \
     ./configure CXX=g++-4.8 && \
     make && \
-    make install
+    make install && \
+    make clean
 
 # libc-database
 RUN git clone https://github.com/niklasb/libc-database.git /opt/libc-database
