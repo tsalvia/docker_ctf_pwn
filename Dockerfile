@@ -49,7 +49,8 @@ RUN wget -O - https://github.com/Kitware/CMake/releases/download/v3.15.3/cmake-3
     cd /opt/cmake-3.15.3 && \
     ./configure && \
     make && \
-    make install
+    make install && \
+    make clean
 
 # gdb, gdb-peda
 RUN apt-get install -y gdb && \
