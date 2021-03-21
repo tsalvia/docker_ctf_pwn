@@ -62,7 +62,7 @@ RUN apt-get install -y python3.5 python3.5-dev && \
     update-alternatives --install /usr/bin/python python /usr/bin/python3.5 30 && \
     update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.5 30 && \
     curl -kL https://bootstrap.pypa.io/get-pip.py | python && \
-    pip3 install --upgrade git+https://github.com/arthaud/python3-pwntools.git && \
+    pip3 install --upgrade pwntools && \
     pip3 install --upgrade angr
 
 # Ruby2.6.3, one_gadget
@@ -98,7 +98,8 @@ RUN git clone https://github.com/niklasb/libc-database.git /opt/libc-database
 
 # Enable coredump, Disabled ASLR
 RUN echo "ulimit -c unlimited" >> /root/.bashrc && \
-    echo "echo 0 > /proc/sys/kernel/randomize_va_space" >> /root/.bashrc
+    echo "echo 0 > /proc/sys/kernel/randomize_va_space" >> /root/.bashrc \
+    echo "export LANG=C.UTF-8" >> /root/.bashrc
 
 WORKDIR /root/workdir
 CMD ["/bin/bash"]
