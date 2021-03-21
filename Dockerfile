@@ -98,7 +98,7 @@ RUN git clone https://github.com/niklasb/libc-database.git /opt/libc-database
 
 # Enable coredump, Disabled ASLR
 RUN echo "ulimit -c unlimited" >> /root/.bashrc && \
-    echo "echo 0 > /proc/sys/kernel/randomize_va_space" >> /root/.bashrc \
+    echo "echo 0 > /proc/sys/kernel/randomize_va_space" >> /root/.bashrc && \
     echo "export LANG=C.UTF-8" >> /root/.bashrc
 
 WORKDIR /root/workdir
