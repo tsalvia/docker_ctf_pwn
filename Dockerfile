@@ -55,13 +55,16 @@ RUN wget -O - https://github.com/Kitware/CMake/releases/download/v3.15.3/cmake-3
 # gdb, gdb-peda
 RUN apt-get install -y gdb && \
     git clone https://github.com/longld/peda.git /opt/peda && \
-    echo "source /opt/peda/peda.py" > /root/.gdbinit
+    git clone https://github.com/scwuaptx/Pwngdb.git /opt/Pwngdb && \
+    cp /opt/Pwngdb/.gdbinit ~/ && \
+    sed -ie "s/~/\/opt/g" ~/.gdbinit
 
-# Python3.5, pip, pwntools, angr
-RUN apt-get install -y python3.5 python3.5-dev && \
-    update-alternatives --install /usr/bin/python python /usr/bin/python3.5 30 && \
-    update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.5 30 && \
-    curl -kL https://bootstrap.pypa.io/get-pip.py | python && \
+# Python3.6.13, pip, pwntools, angr
+RUN wget -O - https://www.python.org/ftp/python/3.6.13/Python-3.6.13.tgz | tar xvfz - -C /opt && \
+    cd /opt/Python-3.6.13 && \
+    ./configure --enable-optimizations && \
+    make install && \
+    pip3 install --upgrade pip && \
     pip3 install --upgrade pwntools && \
     pip3 install --upgrade angr
 
@@ -78,7 +81,7 @@ RUN git clone https://github.com/sstephenson/rbenv.git /root/.rbenv && \
 RUN git clone https://github.com/radare/radare2.git /opt/radare2 && \
     /opt/radare2/sys/install.sh && \
     r2pm init && \
-    r2pm -i r2ghidra-dec
+    r2pm -i r2ghidra
 
 # akitools
 RUN git clone https://github.com/akiym/akitools /opt/akitools && \
