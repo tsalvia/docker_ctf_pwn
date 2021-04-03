@@ -66,6 +66,7 @@ RUN wget -O - https://www.python.org/ftp/python/3.6.13/Python-3.6.13.tgz | tar x
     make install && \
     pip3 install --upgrade pip && \
     pip3 install --upgrade pwntools && \
+    pip3 install --upgrade six==1.12.0 && \
     pip3 install --upgrade angr
 
 # Ruby2.6.3, one_gadget
